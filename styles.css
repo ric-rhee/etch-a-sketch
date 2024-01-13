@@ -1,0 +1,10 @@
+body {
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-container {
+    border: 3px solid black;
+}
