@@ -11,13 +11,20 @@ body {
 }
 
 .slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 10px;
 }
 
 .reset-button {
     font-family: "Roboto", sans-serif;
-    background-color: white;
+    color: black;
+    background-color: darkgrey;
+    height: 30px;
     border: 1px solid black;
+    border-radius: 3px;
     padding: 3px;
     margin-top: 8px;
+    width: 180px;
 }
