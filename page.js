@@ -32,6 +32,10 @@ function resetGrid() {
     }
 }
 
+function updateDimensions() {
+    dimensions.innerHTML = `Grid size: ${slider.value} x ${slider.value}`;
+}
+
 function removeAll() {
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.lastChild);
@@ -39,10 +43,10 @@ function removeAll() {
 }
 
 slider.value = 16;
-dimensions.innerHTML = `Grid size: ${slider.value} x ${slider.value}`;
+updateDimensions();
 reset.addEventListener('click', () => resetGrid());
 slider.oninput = function() {
-    dimensions.innerHTML = this.value;
+    updateDimensions();
     removeAll();
     drawGrid(this.value);
 }
