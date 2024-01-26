@@ -1,6 +1,6 @@
 const gridContainer = document.querySelector('.grid-container');
-const slider = document.querySelector('.slider-container');
-const dimensions = document.querySelector('.dimensions');
+var slider = document.querySelector('.slider');
+var dimensions = document.querySelector('.dimensions');
 const reset = document.querySelector('.reset-button');
 dimensions.innerHTML = slider.value;
 
@@ -25,10 +25,13 @@ function drawGrid(dimension) {
 
 function resetGrid() {
     const cells = document.querySelectorAll('.cell');
-    cells.style.backgroundColor = 'white';
+    for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        cell.style.backgroundColor = 'white';
+    }
 }
 
-slider.oninput = function () {
+slider.oninput = function() {
     dimensions.innerHTML = this.value;
 }
 
