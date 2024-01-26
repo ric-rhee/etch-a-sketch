@@ -1,10 +1,11 @@
 const gridContainer = document.querySelector('.grid-container');
-var slider = document.querySelector('.slider');
-var dimensions = document.querySelector('.dimensions');
+const slider = document.querySelector('.slider');
+const dimensions = document.querySelector('.dimensions');
 const reset = document.querySelector('.reset-button');
-dimensions.innerHTML = slider.value;
+const GRIDSIZE = 480;
 
 function drawGrid(dimension) {
+    cellSize = GRIDSIZE / dimension;
     for (let i = 1; i <= dimension; i++) {
         const gridRow = document.createElement('div');
         gridRow.style.display = 'flex';
@@ -12,8 +13,8 @@ function drawGrid(dimension) {
             const cell = document.createElement('div');
             cell.setAttribute('class', 'cell');
             cell.style.backgroundColor = 'white';
-            cell.style.width = '18px';
-            cell.style.height = '18px';
+            cell.style.width = `${cellSize}px`;
+            cell.style.height = `${cellSize}px`;
             cell.addEventListener('mouseover', () => {
                 cell.style.backgroundColor = 'black';
             });
@@ -31,12 +32,19 @@ function resetGrid() {
     }
 }
 
-slider.oninput = function() {
-    dimensions.innerHTML = this.value;
+function removeAll() {
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.lastChild);
+    }
 }
 
-reset.addEventListener('click', () => {
-    resetGrid();
-});
+slider.value = 16;
+dimensions.innerHTML = `Grid size: ${slider.value} x ${slider.value}`;
+reset.addEventListener('click', () => resetGrid());
+slider.oninput = function() {
+    dimensions.innerHTML = this.value;
+    removeAll();
+    drawGrid(this.value);
+}
 
 drawGrid(16);
