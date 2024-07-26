@@ -3,6 +3,8 @@ const slider = document.querySelector('.slider');
 const dimensions = document.querySelector('.dimensions');
 const reset = document.querySelector('.reset-button');
 const GRIDSIZE = 480;
+const DEFAULT_GRID_VALUE = 16;
+const DEFAULT_COLOR_MODE = 'black';
 
 function drawGrid(dimension) {
     cellSize = GRIDSIZE / dimension;
@@ -42,13 +44,32 @@ function removeAll() {
     }
 }
 
-slider.value = 16;
-updateDimensions();
-reset.addEventListener('click', () => resetGrid());
-slider.oninput = function() {
-    updateDimensions();
-    removeAll();
-    drawGrid(this.value);
+function generateRandomColor() {
+    let r = Math.floor(Math.random() * 255);
+    let g = Math.floor(Math.random() * 255);
+    let b = Math.floor(Math.random() * 255);
+    return `rgb(${r},${g},${b})`;
 }
 
-drawGrid(16);
+function pickColor(mode) {
+    if (mode == 'black') {
+        return 'black';
+    }
+    else if (mode == 'rainbow') {
+        return generateRandomColor();
+    }
+}
+
+function initialize() {
+    slider.value = DEFAULT_GRID_VALUE;
+    updateDimensions();
+    reset.addEventListener('click', () => resetGrid());
+    slider.oninput = function () {
+        updateDimensions();
+        removeAll();
+        drawGrid(this.value);
+    }
+    drawGrid(16);
+}
+
+initialize()
