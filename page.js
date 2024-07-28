@@ -2,7 +2,12 @@ const gridContainer = document.querySelector('.grid-container');
 const slider = document.querySelector('.slider');
 const dimensions = document.querySelector('.dimensions');
 const reset = document.querySelector('.reset-button');
+const rainbow = document.querySelector('.rainbow');
 const GRIDSIZE = 480;
+const DEFAULT_GRID_VALUE = 16;
+const DEFAULT_COLOR_MODE = 'black';
+
+let colorMode = DEFAULT_COLOR_MODE;
 
 function drawGrid(dimension) {
     cellSize = GRIDSIZE / dimension;
@@ -16,7 +21,7 @@ function drawGrid(dimension) {
             cell.style.width = `${cellSize}px`;
             cell.style.height = `${cellSize}px`;
             cell.addEventListener('mouseover', () => {
-                cell.style.backgroundColor = 'black';
+                cell.style.backgroundColor = pickColor();
             });
             gridRow.appendChild(cell);
         }
@@ -42,13 +47,44 @@ function removeAll() {
     }
 }
 
-slider.value = 16;
-updateDimensions();
-reset.addEventListener('click', () => resetGrid());
-slider.oninput = function() {
-    updateDimensions();
-    removeAll();
-    drawGrid(this.value);
+function generateRandomColor() {
+    let r = Math.floor(Math.random() * 255);
+    let g = Math.floor(Math.random() * 255);
+    let b = Math.floor(Math.random() * 255);
+    return `rgb(${r},${g},${b})`;
 }
 
-drawGrid(16);
+function pickColor() {
+    if (colorMode == 'black') {
+        return 'black';
+    }
+    else if (colorMode == 'rainbow') {
+        return generateRandomColor();
+    }
+}
+
+function switchColorMode() {
+    if (colorMode == 'black') { 
+        colorMode = 'rainbow';
+        rainbow.classList.add('active');
+    }
+    else { 
+        colorMode = 'black';
+        rainbow.classList.remove('active');
+    }
+}
+
+function initialize() {
+    slider.value = DEFAULT_GRID_VALUE;
+    updateDimensions();
+    reset.addEventListener('click', () => resetGrid());
+    rainbow.addEventListener('click', () => switchColorMode());
+    slider.oninput = function () {
+        updateDimensions();
+        removeAll();
+        drawGrid(this.value);
+    }
+    drawGrid(slider.value);
+}
+
+initialize();
